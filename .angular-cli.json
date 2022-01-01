@@ -1,0 +1,108 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "project": {
+    "name": "salsa"
+  },
+  "apps": [
+    {
+      "root": "src",
+      "outDir": "dist",
+      "assets": [
+        {
+          "glob": "**/*",
+          "input": "../node_modules/cesium/Build/Cesium",
+          "output": "./assets/cesium"
+        },
+        "assets",
+        "favicon.ico",
+        "manifest.json",
+        "browserconfig.xml",
+        "web.config"
+      ],
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "polyfills.ts",
+      "test": "test.ts",
+      "tsconfig": "tsconfig.app.json",
+      "testTsconfig": "tsconfig.spec.json",
+      "prefix": "app",
+      "styles": [
+        "assets/css/css-loader.css",
+        "assets/scss/theme.scss",
+        "../node_modules/cesium/Build/Cesium/Widgets/widgets.css",
+        "../node_modules/elegant-icons/style.css",
+        "../node_modules/font-awesome/css/font-awesome.min.css",
+        "../node_modules/@phosphor/widgets/style/index.css",
+        "../node_modules/bootstrap-multiselect/dist/css/bootstrap-multiselect.css",
+        "../node_modules/codemirror/lib/codemirror.css",
+        "../node_modules/codemirror/addon/hint/show-hint.css",
+        "../node_modules/jsplumb/css/jsplumbtoolkit-defaults.css",
+        "split-dock/split-dock.scss",
+        "assets/css/fonts.css",
+        "assets/css/iconapp.css",
+        "assets/scss/style.scss",
+        "assets/css/icheck_minimal.css",
+        "assets/css/jquery-ui.css",
+        "assets/css/jquery-ui.structure.css",
+        "assets/css/jquery-ui.theme.css",
+        "styles.scss"
+      ],
+      "stylePreprocessorOptions": {
+        "includePaths": [
+          "node_modules",
+          "src"
+        ]
+      },
+      "scripts": [
+        "../node_modules/cesium/Build/Cesium/Cesium.js",
+        "../node_modules/jquery/dist/jquery.js",
+        "../node_modules/notebookjs/notebook.js",
+        "../node_modules/bootstrap-sass/assets/javascripts/bootstrap.js"
+      ],
+      "environmentSource": "environments/environment.ts",
+      "environments": {
+        "dev": "environments/environment.ts",
+        "prod": "environments/environment.prod.ts",
+        "mock": "environments/environment.mock.ts",
+        "falcon": "environments/environment.falcon.ts"
+      }
+    }
+  ],
+  "e2e": {
+    "protractor": {
+      "config": "./protractor.conf.js"
+    }
+  },
+  "lint": [
+    {
+      "project": "src/tsconfig.app.json",
+      "exclude": "**/node_modules/**"
+    },
+    {
+      "project": "src/tsconfig.spec.json",
+      "exclude": "**/node_modules/**"
+    },
+    {
+      "project": "e2e/tsconfig.e2e.json",
+      "exclude": "**/node_modules/**"
+    }
+  ],
+  "test": {
+    "karma": {
+      "config": "./karma.conf.js"
+    },
+    "codeCoverage": {
+      "exclude": [ ]
+    }
+  },
+  "defaults": {
+    "styleExt": "scss",
+    "component": {},
+    "serve": {
+      "port": 3000
+    }
+  },
+  "warnings": {
+    "typescriptMismatch": false
+  }
+}

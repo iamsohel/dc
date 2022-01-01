@@ -1,0 +1,143 @@
+<asset-operations [type]="config.asset.values.TABLE" [selectedItems]="_assetItem" (onDelete)="_onDeleteTable()" [scope]="scope"></asset-operations>
+<app-spinner [visibility]="!table"></app-spinner>
+<div class="row">
+  <div class="col-md-12 brand-tab">
+    <div class="row">
+      <div class="col-md-6">
+        <app-input [label]="'Table Name'" [control]="tableEditForm.controls['name']" disabled="true"></app-input>
+      </div>
+      <div class="col-md-6">
+        <div class="btn-group pull-right" role="group">
+          <button type="button" class="btn btn-primary"
+            [disabled]="_isProcessingTable || cellValueNotChanged"
+            (click)="saveTable()">
+            Update&nbsp;<i class="glyphicon glyphicon-ok"></i></button>
+            <button type="button" class="btn btn-secondary"
+              (click)="cancel()">
+              Cancel</button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <app-description [control]="tableEditForm.controls['description']"></app-description>
+      </div>
+      <div class="col-md-6" *ngIf="table && table.version">
+        <div class="form-group version-label-text">
+          <label>Version</label>
+          <span>{{table.version}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="row-flex pt5 pb5" style="align-items: flex-end; flex-wrap: wrap;">
+        <div class="toolbar col-xs-12 flex-static">
+          <ul class="nav navbar-nav grid-toolbar">
+            <li class="dropdown" dropdown>
+              <a class="nav-link link-colorless" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <i class="imgaction grid-insert-column-icon ag-grid-menu-icon center-block"></i>
+                <div class="text-center">Insert Column</div>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a (click)="insertColumnLeft();" class="link ag-grid-sub-menu">
+                  <i class="grid-insert-column-left-icon"></i>
+                  <span>Insert Left</span></a>
+                </li>
+                <li><a (click)="insertColumnRight();" class="link ag-grid-sub-menu">
+                  <i class="grid-insert-column-right-icon"></i>
+                  <span>Insert Right</span></a>
+                </li>
+              </ul>
+            </li>
+            <li class="dropdown" dropdown>
+              <a class="nav-link link-colorless" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <i class="imgaction grid-insert-row-icon ag-grid-menu-icon center-block"></i>
+                <div class="text-center">Insert Row</div>
+              </a>
+              <ul class="dropdown-menu">
+                
+                <li><a (click)="insertRowAbove();" class="link ag-grid-sub-menu">
+                  <i class="grid-insert-row-above"></i>
+                  <span>Insert Above</span></a>
+                </li>
+                <li><a (click)="insertRowBelow();" class="link ag-grid-sub-menu">
+                  <i class="grid-insert-row-below"></i>
+                  <span>Insert Below</span></a>
+                </li>
+              </ul>
+            </li>
+            <li class="dropdown" dropdown>
+              <a class="nav-link link-colorless" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <i class="imgaction grid-edit-icon ag-grid-menu-icon center-block"></i>
+                <div class="text-center">Edit</div>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a (click)="shouldDeleteItem('row');" class="link ag-grid-sub-menu">
+                  <i class="grid-delete-row-icon"></i>
+                  <span>Delete Row</span></a>
+                </li>
+                <li><a (click)="shouldDeleteItem('column');" class="link ag-grid-sub-menu">
+                  <i class="grid-delete-column-icon"></i>
+                  <span>Delete Column</span></a>
+                </li>
+                <li role="separator" class="divider"></li>
+                <li><a (click)="shouldRenameColumn();" class="link ag-grid-sub-menu">
+                    <i class="grid-rename-column-icon"></i>
+                    <span>Rename Column</span></a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <set-column-name-modal #setColumnNameModal (onSaved)="insertColumn($event)" (onRename)="renameColumn($event)"></set-column-name-modal>
+      <table-item-delete-modal #itemDelteModal (deleted)="deleteItem($event)"></table-item-delete-modal>
+    </div>
+  </div>
+</div>
+<div *ngIf="table" class="row">
+  <div class="col-md-12">
+    <div>
+      <app-spinner [visibility]="!tableDataset || (_datasetLoadingTooLong | async)"></app-spinner>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="p0 form-control brand-control">
+            <div class="row">
+              <div class="col-md-6 ellipsis">
+                <strong>{{tableEditForm.controls['name'].value}}</strong>
+              </div>              
+              <div class="col-md-6" *ngIf="tableDataset">
+                <div class="pull-right">
+                  {{(tableDataset.count || 0) | pluralize:({other: '{} rows', '0': 'No rows', '1': '{} row'})}}
+                </div>
+                <div class="pull-right">
+                  <app-pagination [page]="tableViewForm.controls['page']"
+                    [pageSize]="tableViewForm.controls['page_size']"
+                    [currentPageSize]="_currentPageSize"
+                    [rowsCount]="tableDataset.count">
+                  </app-pagination>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="tableDataset">
+        <ag-grid-angular
+          class="ag-theme-balham"
+          [adaptiveHeight]="{minHeight: 300, property: 'height'}"
+          [modules]="_modules"
+          [defaultColDef]="_defaultColDef"
+          [pagination]="true"
+          [suppressPaginationPanel]="true"
+          [paginationPageSize]="tableViewForm.controls['page_size'].value"
+          rowSelection="multiple"
+          suppressDragLeaveHidesColumns="true"
+          (gridReady)="onGridReady($event)"
+          (cellValueChanged)="onCellValueChanged($event)"
+          >
+        </ag-grid-angular>
+      </div>
+    </div>
+  </div>
+</div>

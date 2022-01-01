@@ -1,0 +1,51 @@
+language: node_js
+
+sudo: required
+
+branches:
+  only:
+    - master
+    - staging
+    - develop
+    - /^release\/[0-9]+.[0-9]+.[0-9]+$/
+    - /^v[0-9]+.[0-9]+.[0-9]+$/
+
+node_js:
+  - "8.11"
+
+cache:
+  directories:
+    - "node_modules"
+
+before_install:
+  - umask 0022
+  - sudo pip install --upgrade pip
+  - pip install --user awscli
+  - export PATH=$PATH:$HOME/.local/bin
+
+install:
+  - yarn install
+
+script:
+  - yarn test
+  - yarn run build
+
+deploy:
+  provider: script
+  script: ./scripts/deploy.sh
+  skip_cleanup: true
+  on:
+    condition: $TRAVIS_PULL_REQUEST = false
+    all_branches: true
+
+notifications:
+  slack: sentrana:6BoSJ2NfknlUEVuHPXoUqhxb#travis-builds
+  email:
+    recipients:
+      - anthony.difrancesco@sentrana.com
+      - kupreychik_af@bw-sw.com
+    on_success: change
+    on_failure: always
+
+git:
+  depth: false

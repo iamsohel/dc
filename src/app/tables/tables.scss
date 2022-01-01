@@ -1,0 +1,247 @@
+table.table.table-dataset {
+  > thead > tr > th,
+  > thead > tr > td,
+  > tbody > tr > th,
+  > tbody > tr > td {
+    border-bottom: 1px solid #b3b3b3;
+    border-right: 1px solid #b3b3b3;
+  }
+
+  > thead {
+    border-bottom: 2px gray solid;
+  }
+
+  > tbody > tr > th:last-of-type {
+    border-right: 2px gray solid;
+  }
+
+  > thead > tr > th,
+  > tbody > tr > th {
+    font-size: 13px;
+    padding: 2px 10px;
+    white-space: nowrap;
+    vertical-align: middle;
+    .sort-control {
+      font-size: 16px;
+    }
+
+    &.tables-select-control {
+      background: rgba(255, 255, 255, 0.5);
+      padding: 0;
+      select.form-control {
+        padding: 2px 6px;
+        border: 0;
+        width: auto;
+        height: auto;
+        min-width: 100%;
+        background: transparent;
+        font-size: 100%;
+        font-size: inherit;
+      }
+      span {
+        padding: 2px 10px;
+        font-size: 100%;
+        font-size: inherit;
+      }
+    }
+  }
+
+  > tbody > tr > td {
+    font-size: 13px;
+    padding: 0 2px;
+  }
+
+  > colgroup > col.response,
+  > tbody > tr.response {
+    background-color: #ffe299;
+  }
+
+  > colgroup > col.predictor,
+  > tbody > tr.predictor {
+    background-color: #e7f0fd;
+  }
+
+}
+
+table-edit, table-view {
+  ag-grid-angular {
+    .ag-ltr .ag-header-row > .ag-header-cell,
+    .ag-ltr .ag-row > .ag-cell {
+      border-bottom: 1px solid #b3b3b3;
+      border-right: 1px solid #b3b3b3;
+      font-family: Roboto, sans-serif;
+    }
+
+    .ag-header {
+      border-bottom: 2px gray solid !important;
+      .ag-header-cell {
+        background: #eeeeee;
+        color: black !important;
+        font-weight: bold;
+      }
+    }
+
+    .ag-floating-top {
+      background: #fafafa !important;
+      border-bottom: 2px gray solid !important;
+      .ag-cell {
+        text-align: center;
+        font-weight: bold;
+        color: gray;
+      }
+    }
+
+    .ag-ltr .ag-header-row .ag-header-cell-text {
+      font-size: 13px;
+      white-space: nowrap;
+      vertical-align: middle;
+      margin: auto;
+    }
+
+    .ag-ltr .ag-row > .ag-cell {
+      font-size: 13px;
+    }
+
+    .ag-rich-select .ag-rich-select-list {
+      height: unset !important;
+    }
+  }
+}
+
+table-edit {
+  .toolbar {
+    margin-top: -15px;
+    margin-left: 15px;
+    width: 100%;
+
+    .dropdown {
+      margin: 5px 2px;
+      padding: 5px 0px;
+      > a {
+        padding: 2px 4px;
+        margin: 0 -1px !important;
+      }
+    }
+    
+    .dropdown > a:hover {
+      text-decoration: none;
+      background-color: #eeeeee;
+    }
+  }
+
+  div.ag-cell-focus {
+    border: 2px solid blue !important;
+  }
+
+  .ag-grid-sub-menu {
+    i {
+      display: inline-block;
+      margin-right: 15px;
+    }
+  }
+
+  .dropdown-menu li a {
+      position: relative;
+    
+    > i {
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
+    }
+    > span {
+      margin-left: 55px;
+      padding: 15px 0px;
+      display: inline-block;
+    }
+  }
+
+  .grid-toolbar > li > a > div {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 10px;
+    font-family: "Lato";
+    color: black;
+    font-weight: 700;
+  }
+
+  .grid-edit-icon {
+    background: url('assets/img/icons/icon_ag_grid_sprite.png') no-repeat 27% 18%;
+    background-size: 400px 300px;
+    width: 44px;
+    height: 44px;
+  }
+  
+  .grid-insert-row-icon {
+    background: url('assets/img/icons/icon_ag_grid_sprite.png') no-repeat 56% 82%;
+    background-size: 430px 322px;
+    width: 44px;
+    height: 44px;
+  }
+  
+  
+  .grid-insert-column-icon {
+    background: url('assets/img/icons/icon_ag_grid_sprite.png') no-repeat 56.019% 60.205%;
+    background-size: 430px 322px;
+    width: 44px;
+    height: 44px;
+  }
+  
+  .grid-rename-column-icon {
+    background: url('assets/img/icons/icon_ag_grid_sprite.png') no-repeat 27.5% 82%;;
+    background-size: 400px 300px;
+    width: 44px;
+    height: 44px;
+  }
+  
+  .grid-delete-row-icon {
+    background: url('assets/img/icons/icon_ag_grid_sprite.png') no-repeat 85.6% 82%;
+    background-size: 430px 322px;
+    width: 44px;
+    height: 44px;
+  }
+  
+  .grid-delete-column-icon {
+    background: url('assets/img/icons/icon_ag_grid_sprite.png') no-repeat 86% 60.044%;
+    background-size: 430px 322px;
+    width: 44px;
+    height: 44px;
+  }
+  
+  .grid-insert-column-right-icon {
+    background: url('assets/img/icons/icon_ag_grid_sprite.png') no-repeat 85.5% 18%;
+    background-size: 430px 322px;
+    width: 44px;
+    height: 44px;
+  }
+  
+  .grid-insert-column-left-icon {
+    background: url('assets/img/icons/icon_ag_grid_sprite.png') no-repeat 56.19% 18%;
+    background-size: 430px 322px;
+    width: 44px;
+    height: 44px;
+  }
+  
+  .grid-insert-row-below {
+    background: url('assets/img/icons/icon_ag_grid_sprite.png') no-repeat 56.067% 39.965%;
+    background-size: 430px 322px;
+    width: 44px;
+    height: 44px;
+  }
+  
+  .grid-insert-row-above {
+    background: url('assets/img/icons/icon_ag_grid_sprite.png') no-repeat 84.9% 39.5%;
+    background-size: 430px 322px;
+    width: 44px;
+    height: 44px;
+  }
+}
+
+.version-label-text {
+  padding-top: 9px;
+}
+
+.list-page-table-name {
+  padding: 0px 10px !important;
+}

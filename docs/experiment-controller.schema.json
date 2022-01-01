@@ -1,0 +1,495 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "experiments/experiment-id/controller",
+    "title": "Interactive experiment WebSocket messages",
+    "definitions": {
+        "PipelineValue": {
+            "oneOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "number"
+                },
+                {
+                    "type": "boolean"
+                }
+            ]
+        },
+        "AssetReference": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "type": {
+                    "enum": [
+                        "TABULAR_MODEL",
+                        "TABULAR_PREDICTION",
+                        "TABLE",
+                        "FLOW",
+                        "ALBUM",
+                        "CV_MODEL",
+                        "CV_PREDICTION",
+                        "ONLINE_JOB",
+                        "DC_PROJECT",
+                        "EXPERIMENT",
+                        "PIPELINE",
+                        "DATASET"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "type"
+            ]
+        },
+        "OperatorApplicationSummary": {
+            "oneOf": [
+                {
+                    "$ref": "#/definitions/SimpleSummary"
+                },
+                {
+                    "$ref": "#/definitions/TableSummary"
+                },
+                {
+                    "$ref": "#/definitions/ConfusionMatrix"
+                }
+            ]
+        },
+        "SimpleSummary": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "SIMPLE"
+                },
+                "values": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/PipelineValue"
+                    }
+                }
+            },
+            "required": [
+                "type",
+                "values"
+            ]
+        },
+        "TableSummary": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "TABLE"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "columns": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "oneOf": [
+                                {
+                                    "$ref": "#/definitions/PipelineValue"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "required": [
+                "type",
+                "name",
+                "columns",
+                "values"
+            ]
+        },
+        "ConfusionMatrix": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "CONFUSION_MATRIX"
+                },
+                "confusionMatrixCells": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "actualLabelIndex": {
+                                "type": "integer"
+                            },
+                            "predictedLabelIndex": {
+                                "type": "integer"
+                            },
+                            "value": {
+                                "type": "integer"
+                            }
+                        },
+                        "required": [
+                            "value"
+                        ]
+                    }
+                },
+                "labels": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "type",
+                "confusionMatrixCells",
+                "labels"
+            ]
+        },
+        "PipelineStepResult": {
+            "type": "object",
+            "properties": {
+                "outputValues": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/PipelineValue"
+                    }
+                },
+                "summaries": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/OperatorApplicationSummary"
+                    }
+                },
+                "executionTime": {
+                    "type": "integer"
+                },
+                "assets": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/AssetReference"
+                    }
+                }
+            },
+            "required": [
+                "outputValues",
+                "summaries",
+                "executionTime",
+                "assets"
+            ]
+        },
+        "OutputIndex": {
+            "type": "object",
+            "properties": {
+                "_outputIndex": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "value"
+            ]
+        },
+        "PipelineOutputReference": {
+            "type": "object",
+            "properties": {
+                "stepId": {
+                    "type": "string"
+                },
+                "outputIndex": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "stepId",
+                "outputIndex"
+            ]
+        },
+        "PipelineParameters": {
+            "type": "object",
+            "additionalProperties": {
+                "oneOf": [
+                    {
+                        "type": "string"
+                    },
+                    {
+                        "type": "number"
+                    },
+                    {
+                        "type": "boolean"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "boolean"
+                        }
+                    }
+                ]
+            }
+        },
+        "PushPipelineStep": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "PUSH_PIPELINE_STEP"
+                },
+                "stepId": {
+                    "type": "string"
+                },
+                "operator": {
+                    "type": "string"
+                },
+                "inputs": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/definitions/PipelineOutputReference"
+                            },
+                            {
+                                "type": "array",
+                                "items": {
+                                    $ref": "#/definitions/PipelineOutputReference"
+                                }
+                            }
+                        ]
+                    }
+                },
+                "params": {
+                    "$ref": "#/definitions/PipelineParameters"
+                }
+            },
+            "required": [
+                "type",
+                "stepId",
+                "operator",
+                "inputs",
+                "params"
+            ]
+        },
+        "DropPipelineStep": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "DROP_PIPELINE_STEP"
+                },
+                "stepId": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "stepId"
+            ]
+        },
+        "StepPushRejection": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "STEP_PUSH_REJECTION"
+                },
+                "stepId": {
+                    "type": "string"
+                },
+                "error": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "stepId",
+                "error"
+            ]
+        },
+        "PipelineStepStatus": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "PIPELINE_STEP_STATUS"
+                },
+                "stepId": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "IDLE",
+                        "RUNNING",
+                        "ERROR",
+                        "READY"
+                    ]
+                },
+                "result": {
+                    "$ref": "#/definitions/PipelineStepResult"
+                },
+                "errorMessage": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "stepId",
+                "status"
+            ]
+        },
+        "PipelineStatus": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "PIPELINE_STATUS"
+                },
+                "steps": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/PipelineStepStatus"
+                    }
+                },
+                "inProcessOfCompleting": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "type",
+                "steps",
+                "inProcessOfCompleting"
+            ]
+        },
+        "InspectPipelineStep": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "INSPECT_PIPELINE_STEP"
+                },
+                "requestId": {
+                    "type": "string"
+                },
+                "stepId": {
+                    "type": "string"
+                },
+                "packageName": {
+                    "type": "string"
+                },
+                "packageVersion": {
+                    "type": "string"
+                },
+                "moduleName": {
+                    "type": "string"
+                },
+                "functionName": {
+                    "type": "string"
+                },
+                "functionArgs": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "anyOf": [
+                            {},
+                            {
+                                "$ref": "#/definitions/OutputIndex"
+                            }
+                        ]
+                    }
+                }
+            },
+            "required": [
+                "type",
+                "requestId",
+                "stepId",
+                "packageName",
+                "moduleName",
+                "functionName",
+                "functionArgs"
+            ]
+        },
+        "StepInspectionResult": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "STEP_INSPECTION_RESULT"
+                },
+                "requestId": {
+                    "type": "string"
+                },
+                "result": {
+                    "type": "object"
+                },
+                "error": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "requestId"
+            ]
+        },
+        "GetPipelineStatus": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "GET_PIPELINE_STATUS"
+                }
+            },
+            "required": [
+                "type"
+            ]
+        },
+        "FinishPipeline": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "FINISH_PIPELINE"
+                }
+            },
+            "required": [
+                "type"
+            ]
+        }
+    },
+    "type": "object",
+    "oneOf": [
+        {
+            "$ref": "#/definitions/PushPipelineStep"
+        },
+        {
+            "$ref": "#/definitions/DropPipelineStep"
+        },
+        {
+            "$ref": "#/definitions/StepPushRejection"
+        },
+        {
+            "$ref": "#/definitions/PipelineStepStatus"
+        },
+        {
+            "$ref": "#/definitions/PipelineStatus"
+        },
+        {
+            "$ref": "#/definitions/InspectPipelineStep"
+        },
+        {
+            "$ref": "#/definitions/StepInspectionResult"
+        },
+        {
+            "$ref": "#/definitions/GetPipelineStatus"
+        },
+        {
+            "$ref": "#/definitions/FinishPipeline"
+        }
+    ]
+}

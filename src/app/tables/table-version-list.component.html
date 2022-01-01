@@ -1,0 +1,138 @@
+<asset-operations #operations
+  [type]="config.asset.values.TABLE"
+  [(selectedItems)]="selectedItems"
+  [project]="project"
+  [scope]="scope">
+  <form class="form" [formGroup]="form">
+    <app-input [control]="searchControl"
+      [iconBefore]="'glyphicon-search'"
+      [iconAfter]="'glyphicon-remove'"
+      (iconAfterClick)="searchControl.setValue('')"></app-input>
+  </form>
+</asset-operations>
+<div class="row">
+  <div class="col-md-12">
+    <div class="p0 form-control brand-control">
+      <div class="row">
+        <div class="col-md-6">
+          <a class="link" (click)="_backToPrevious()">
+            <i class="glyphicon glyphicon-arrow-left"
+              tooltip
+              data-toggle="tooltip"
+              tooltipTitle="Back to previous"></i>
+          </a>
+          <span class="ellipsis text-bold list-page-table-name">{{_tableName}}</span>
+        </div>
+        <div class="col-md-6" *ngIf="itemsList">
+          <div class="pull-right">
+            {{itemsList.count || 0 | pluralize: ({
+              other: '{} '+config.asset.labelsPlural.TABLE,
+              '0': 'No '+config.asset.labelsPlural.TABLE,
+              '1': '1 '+config.asset.labels.TABLE
+            })}}
+          </div>
+          <div class="pull-right">
+            <app-pagination [page]="form.controls['page']"
+              [pageSize]="form.controls['page_size']"
+              [currentPageSize]="itemsList.data.length"
+              [rowsCount]="itemsList.count">
+            </app-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="table-scroll" [adaptiveHeight]="{minHeight: 450}">
+  <app-spinner [visibility]="_itemsDataLoading | async"></app-spinner>
+  <table *ngIf="itemsList && !(_itemsDataLoading | async)" class="table dataTable table-hover">
+    <thead>
+    <tr style="white-space: nowrap">
+      <th style="width: 1%">
+        <app-check
+          data-testid="select-all-checkbox"
+          (checkedChange)="selectAllItems($event)"
+          [checked]="isAllSelected()"
+          [name]="selectionAllItem"
+          [type]="'checkbox'"
+          [value]="false"></app-check>
+      </th>
+      <th *ngFor="let item of baseColumns"
+        [grid-sort]="item"
+        [grid-sort-control]="form.controls['order']"
+        [attr.style]="item.style | safeStyle"
+      >
+        {{item.name}}
+      </th>
+      <th class="text-right" style="width: 5%">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of itemsList.data">
+      <td>
+        <app-check
+          [attr.data-testid]="'select-' + item.id"
+          (checkedChange)="changeSelection(item, $event)"
+          [checked]="isSelected(item) > -1"
+          [name]="'selection' + item.id" [type]="'checkbox'"
+          [value]="item"></app-check>
+      </td>
+      <td class="text-center">
+        <a [routerLink]="item | apply: _prepareLink">{{item.version || 1}}</a>
+      </td>
+      <td>
+        {{item.description}}
+      </td>
+      <td class="text-center">
+        <i class="dot"
+          [asset-status]="item.status"
+          [asset-status-styles]="config.table.status.styles"
+          tooltip
+          data-toggle="tooltip"
+          [attr.data-original-title]="config.table.status.labels[item.status]"
+        ></i>
+      </td>
+      <td>{{item.created | date:'M/d/y'}}</td>
+      <td [ngSwitch]="item.ownerId">
+        <span *ngSwitchCase="currentUser.id">Me</span>
+        <span *ngSwitchDefault="">{{_sharedOwners[item.ownerId] | AppUserName:!_sharedOwnersLoader.loaded}}</span>
+      </td>
+      <td style="word-break: break-all">
+        {{config.table.datasetType.labels[item.datasetType]}}
+      </td>
+      <td class="dropdown text-right text-muted" dropdown [dropdownContainer]="'.table-scroll'">
+        <a class="nav-link link-colorless table-row-actions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          <span class="glyphicon glyphicon-option-vertical"></span>
+        </a>
+
+        <ul class="dropdown-menu dropdown-menu-right">
+          <li><a class="dropdown-item link"
+            [routerLink]="item | apply: _prepareLink">
+            Preview
+          </a></li>
+          <li *ngIf="item.ownerId === currentUser.id"><a class="dropdown-item link"
+            (click)="share(item)">
+            Share
+          </a></li>
+          <li><a class="dropdown-item link"
+            (click)="clone(item)">
+            Clone
+          </a></li>
+
+          <li role="separator" class="divider"></li>
+          <li><a
+            (click)="deleteItem(item)"
+            class="dropdown-item link">
+            Trash
+          </a></li>
+          <li *ngIf="project"><a
+            (click)="removeItemFromProject(item)"
+            class="dropdown-item link">
+            Remove
+          </a></li>
+        </ul>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

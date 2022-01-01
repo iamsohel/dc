@@ -1,0 +1,155 @@
+@media (min-width: 768px) {
+  dl.user-details dt {
+    width: 100px !important;
+  }
+
+  dl.user-details dd {
+    margin-left: 100px !important;
+  }
+}
+
+.example-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+.modalDisplay {
+  position: absolute;
+  left: 15px;
+  top: 200px;
+  width: 390px;
+  z-index: 9999999999999;
+}
+.searchBar {
+  margin-top: 9px;
+  margin-left: -30px;
+  margin-right: -30px;
+}
+.modalDisplayRestore {
+  color: #2b5ead;
+  margin-top: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.mr-6 {
+  margin-right: 6px;
+}
+.mt-6 {
+  margin-top: 6px;
+}
+.ml-20{
+  margin-left: 20px;
+}
+.checkboxDisplay {
+  width: 20px;
+  height: 20px;
+}
+
+#myGrid {
+  flex: 1 1 0px;
+  width: 100%;
+}
+
+.quote_alert {
+  background: #cfe2ff;
+  font-size: small;
+  margin-bottom: 10px;
+  padding: 8px;
+}
+.downTemp {
+  color: #6989b8;
+  font-weight: bold;
+  font-family: Montserrat;
+}
+
+::-webkit-scrollbar {
+  // display: none;
+}
+
+.button-group {
+  padding-bottom: 1rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 13px;
+}
+
+.resizeModal {
+  margin-left: 320px;
+  margin-top: 140px;
+  width: 375px;
+}
+
+::ng-deep {
+  .ag-popup > div {
+    z-index: 23;
+  }
+  .ag-row-selected {
+    z-index: 9 !important;
+  }
+  .ag-header {
+    color: #2a579a !important;
+    font-weight: bold !important;
+  }
+  .glyphicon-asterisk {
+    color: brown !important;
+  }
+  .ag-menu {
+    width: 260px !important;
+  }
+  .row-fail {
+    font-weight: bold;
+    border: 1px solid red !important;
+    // background-color: #beb7b7 !important;
+  }
+}
+.dots-menu {
+  font-size: 15px;
+  &.btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
+    border-radius: 5px;
+  }
+
+  a.btn {
+    &:active {
+      -webkit-box-shadow: none;
+      box-shadow: none;
+    }
+  }
+
+  ul {
+    &.dropdown-menu {
+      top: 23px;
+      // right: auto;
+      left: -150px;
+      width: 100%;
+
+      li {
+        padding: 0;
+        width: 100%;
+        a {
+          margin: 0;
+        }
+      }
+    }
+  }
+}
+.giStatus {
+  margin: 4px;
+  font-size: 12px;
+  padding: 3px;
+  color: white;
+  border-radius: 2px;
+  width: fit-content;
+  height: fit-content;
+  text-align: center;
+}
+
+// quotation table
+
+.my-custom-scrollbar {
+  position: relative;
+  // height: 500px;
+  overflow: auto;
+}
+.table-wrapper-scroll-y {
+  display: block;
+}

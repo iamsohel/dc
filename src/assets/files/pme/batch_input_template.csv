@@ -1,0 +1,2 @@
+customer_code,material_code,sales_district,sales_organization,uom,currency,price_validity_start_date,committed_volume
+11111,100111,XX,XX11,KG,USD,1/28/2018,1000

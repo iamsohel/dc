@@ -1,0 +1,164 @@
+/* These are modules styles compiled */
+@import 'assets/scss/variables';
+@import '../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables';
+@import '../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins';
+@import 'app/core-ui/core-ui';
+@import 'app/core/core';
+@import 'app/components/components';
+@import 'app/charts/charts';
+@import 'app/tables/tables';
+@import 'app/albums/albums';
+@import 'app/compose/compose';
+@import 'app/train/train';
+@import 'app/diaa/diaa';
+@import 'app/users/users';
+@import 'app/visualize/visualize';
+@import 'app/processes/processes';
+@import 'app/develop/develop';
+@import 'app/develop/notebook-viewer';
+@import 'app/pipelines/styles';
+@import "../node_modules/@ag-grid-community/core/dist/styles/ag-grid.min.css";
+@import "../node_modules/@ag-grid-community/core/dist/styles/ag-theme-balham.min.css";
+
+// APP styles:
+@media (min-width: 992px) {
+  .user-manual-link {
+    line-height: 33px;
+    margin-top: 27px;
+    float: left;
+    font-size: 20px;
+  }
+  .news-block {
+    float: left;
+    width: 20%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: #d9d9d9;
+
+    iframe {
+      height: 100vh;
+    }
+  }
+  .container.container-splash {
+    margin-left: 20%;
+    width: 80%;
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    flex-flow: column nowrap;
+    //justify-content: center;
+    min-height: 100%;
+    color: white;
+    background-color: black;
+    background-image: url("assets/img/splash_bg.jpg");
+    background-repeat: repeat-x;
+    background-attachment: fixed;
+    background-position: bottom;
+    background-size: cover;
+    //background-size: 100%;
+    .img-logo {
+      max-width: 200px;
+      background: url('assets/img/logo_white.png') no-repeat;
+      background-size: contain;
+      float: right;
+      min-height: 80px;
+      min-width: 264px;
+    }
+
+    a {
+      font-weight: bold;
+      color: lighten($brand-primary, 50%) !important;
+    }
+
+    h1.tagline {
+      font-family: "Open Sans";
+      margin-bottom: 50px;
+    }
+
+    .signup-checkbox {
+      display: inline-block;
+      margin: 0 $base-padding;
+      vertical-align: middle;
+      label {
+        margin-bottom: 3px; // hack to align with 'terms and conditions' link
+      }
+    }
+
+    .list-group-item {
+      background-color: transparent;
+      border-width: 0;
+      font-size: 15px;
+      &.fixed-width-inputs {
+        input, select {
+          max-width: 15em;
+        }
+      }
+    }
+
+    .aligned-inputs {
+      .input-group {
+        label {
+          min-width: 200px;
+        }
+      }
+      .list-group-item > div.checkbox {
+        font-size: 20px;
+        label {
+          padding-left: 200px;
+        }
+      }
+      div.radio {
+        label {
+          padding-left: 200px;
+          &:after {
+            display: none;
+          }
+        }
+      }
+      button.btn.btn-block {
+        margin-left: 200px;
+      }
+    }
+
+    .input-group {
+      border-width: 0;
+      margin-bottom: 10px;
+
+      label {
+        background-color: transparent;
+        color: white;
+        font-size: 20px;
+        border-width: 0;
+        text-align: right;
+        padding-right: $base-padding * 2;
+      }
+
+      input {
+        box-shadow: inset 0 0 5px 5px rgba(0, 0, 0, 0.15);
+        border: 1px solid #3b4391;
+      }
+
+      span.input-group-addon {
+        display: none;
+      }
+    }
+
+    button.btn {
+      color: black;
+      border: 1px solid #3b4391;
+
+      &.btn-block {
+        width: auto;
+      }
+    }
+
+    a {
+      color: #94a1de;
+    }
+  }
+}

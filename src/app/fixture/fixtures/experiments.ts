@@ -1,0 +1,1117 @@
+import { IAsset } from '../../core/interfaces/common.interface';
+import { ExperimentType, IExperiment, IExperimentFull } from '../../experiments/experiment.interfaces';
+import { IGenericExperiment } from '../../pipelines/pipeline.interfaces';
+import { CVModelType } from '../../train/cv-model.interface';
+import { ICVTLTrainPipeline, ICVTLTrainResult } from '../../train/cvtl-train.interfaces';
+import { IFixtureData } from '../fixture.interface';
+
+export const experiments: IFixtureData<IExperimentFull> = {
+  data: [
+    {
+      id: 'experiment1',
+      ownerId: 'ownerId1',
+      name: 'Experiment 1',
+      type: ExperimentType.TestExperiment,
+      created: '2013-03-12 10:47',
+      updated: '2013-03-12 10:47',
+      status: IExperiment.Status.RUNNING,
+      description: 'Experiment 1 description',
+      isInteractive: false,
+      pipeline: {
+        testField1: 'Experiment 1 testField1',
+        testField2: 'Experiment 1 testField2',
+      },
+      result: {
+        testField1: 'Experiment 1 testField1',
+        testField2: 'Experiment 1 testField2',
+      },
+    },
+    {
+      id: 'experiment2',
+      ownerId: 'ownerId1',
+      name: 'Experiment 2',
+      type: ExperimentType.TestExperiment,
+      created: '2013-03-12 11:48',
+      updated: '2013-03-12 11:48',
+      status: IExperiment.Status.CANCELLED,
+      description: 'Experiment 2 description',
+      isInteractive: false,
+      pipeline: {
+        testField1: 'Experiment 2 testField1',
+        testField2: 'Experiment 2 testField2',
+      },
+      result: {
+        testField1: 'Experiment 2 testField1',
+        testField2: 'Experiment 2 testField2',
+      },
+    },
+    {
+      id: 'experiment3',
+      ownerId: 'ownerId1',
+      name: 'Experiment 3',
+      type: ExperimentType.TestExperiment,
+      created: '2013-02-13 11:48',
+      updated: '2013-02-13 11:48',
+      status: IExperiment.Status.COMPLETED,
+      description: 'Experiment 3 description',
+      isInteractive: false,
+      pipeline: {
+        testField1: 'Experiment 3 testField1',
+        testField2: 'Experiment 3 testField2',
+      },
+      result: {
+        testField1: 'Experiment 3 testField1',
+        testField2: 'Experiment 3 testField2',
+      },
+    },
+    {
+      id: 'experiment4',
+      ownerId: 'ownerId1',
+      name: 'Experiment 4',
+      type: ExperimentType.TestExperiment,
+      created: '2013-02-13 12:48',
+      updated: '2013-02-13 12:48',
+      status: IExperiment.Status.ERROR,
+      description: 'Experiment 4 description',
+      isInteractive: false,
+      pipeline: {
+        testField1: 'Experiment 4 testField1',
+        testField2: 'Experiment 4 testField2',
+      },
+      result: {
+        testField1: 'Experiment 4 testField1',
+        testField2: 'Experiment 4 testField2',
+      },
+    },
+    {
+      id: 'experiment5',
+      ownerId: 'ownerId1',
+      name: 'Experiment 5',
+      type: ExperimentType.TestExperiment,
+      created: '2013-02-13 13:48',
+      updated: '2013-02-13 13:48',
+      status: IExperiment.Status.RUNNING,
+      description: 'Experiment 5 description',
+      isInteractive: false,
+      pipeline: {
+        testField1: 'Experiment 5 testField1',
+        testField2: 'Experiment 5 testField2',
+      },
+      result: {
+        testField1: 'Experiment 5 testField1',
+        testField2: 'Experiment 5 testField2',
+      },
+    },
+    {
+      id: 'cvExperiment1',
+      ownerId: 'ownerId1',
+      name: 'CV Experiment 1',
+      type: ExperimentType.CVTLTrain,
+      created: '2013-02-13 13:48',
+      updated: '2013-02-13 13:48',
+      status: IExperiment.Status.COMPLETED,
+      isInteractive: false,
+      pipeline: <ICVTLTrainPipeline> {
+        step1: {
+          input: 'cifar10',
+          architecture: 'VGG_16',
+          modelType: {
+            classifierType: 'FCN_3LAYER',
+            tlType: CVModelType.TLType.CLASSIFICATION,
+          },
+        },
+      },
+      result: <ICVTLTrainResult> {
+        step1: {
+          output: 'cifar10predicted',
+          cvModelId: 'cvModelId2',
+          summary: {
+            labels: [
+              'truck',
+              'cat',
+              'bird',
+              'frog',
+              'dog',
+              'deer',
+            ],
+            confusionMatrix: [
+              {actual: 0, predicted: 0, count: 3},
+              {actual: 1, predicted: 1, count: 3},
+              {actual: 2, predicted: 2, count: 3},
+              {actual: 3, predicted: 3, count: 4},
+              {actual: 4, predicted: 4, count: 1},
+              {actual: 5, predicted: 5, count: 3},
+            ],
+          },
+          probabilityPredictionTableId: 'b4312e3d-eec2-4056-b395-1f624a7aba6a',
+          testProbabilityPredictionTableId: 'be1efabc-296e-4ea8-b820-1fc623c6610a',
+        },
+      },
+    },
+    {
+      id: 'experiment9',
+      ownerId: 'ownerId1',
+      name: 'Experiment 9',
+      type: ExperimentType.GenericExperiment,
+      created: '2013-03-12 11:48',
+      updated: '2013-03-12 11:48',
+      status: IExperiment.Status.ERROR,
+      description: 'Experiment 9 description',
+      isInteractive: false,
+      pipeline: {
+        steps: [
+          {
+            id: '1',
+            operator: 'testOperator1',
+            inputs: {},
+            params: {},
+            coordinates: { x: 120, y: 120 },
+          },
+        ],
+        assets: [],
+      },
+      result: {
+        steps: [
+          {
+            stepId: '1',
+            assets: [
+              { type: IAsset.Type.CV_MODEL, id: 'cvModelId1'},
+              { type: IAsset.Type.CV_MODEL, id: 'cvModelId2'},
+              { type: IAsset.Type.ALBUM, id: 'cifar100'},
+            ],
+            errorMessage: 'some\nerror\nmessage\nsome\nerror\nmessage\nsome\nerror\nmessage\nsome\nerror\nmessage\nsome\nerror\nmessage',
+          },
+          {
+            stepId: '1',
+            assets: [
+              { type: IAsset.Type.CV_MODEL, id: 'cvModelId1'},
+              { type: IAsset.Type.CV_MODEL, id: 'cvModelId2'},
+              { type: IAsset.Type.ALBUM, id: 'cifar100'},
+            ],
+            summaries: [
+              {
+                type: IGenericExperiment.SummaryType.SIMPLE,
+                values: {
+                  'str': 'string',
+                  'bool': false,
+                  'number': 12343,
+                },
+              },
+              {
+                type: IGenericExperiment.SummaryType.TABLE,
+                name: 'Some summary in table form',
+                columns: [
+                  { name: 'First column' },
+                  { name: 'Another column' },
+                  { name: 'Non-important column' },
+                  { name: 'Last, but not least column' },
+                ],
+                values: [
+                  ['One', 1.0, null, false],
+                  ['Two', 2.0, 'Value', false],
+                  ['Six', 6.5, 'blabla', true],
+                  ['Ten', 10.33333333333333, '', true],
+                ],
+              },
+              {
+                type: IGenericExperiment.SummaryType.CONFUSION_MATRIX,
+                labels: [
+                  'row1',
+                  'row2',
+                  'row3',
+                  'row4',
+                  'row5',
+                  'row6',
+                  'row7',
+                ],
+                rows: [
+                  {actual: 0, predicted: 0, count: 147},
+                  {actual: 0, predicted: 1, count: 22},
+                  {actual: 0, predicted: 2, count: 46},
+                  {actual: 0, predicted: 3, count: 42},
+                  {actual: 1, predicted: 0, count: 12},
+                  {actual: 1, predicted: 1, count: 53},
+                  {actual: 1, predicted: 2, count: 12},
+                ],
+              },
+            ],
+            outputValues: {
+              '0': 'string',
+              '1': false,
+              '2': 12343,
+            },
+            executionTime: Math.round(Math.random() * 1000),
+          },
+        ],
+        assets: [
+          { type: IAsset.Type.CV_MODEL, id: 'cvModelId1'},
+          { type: IAsset.Type.CV_MODEL, id: 'cvModelId2'},
+          { type: IAsset.Type.ALBUM, id: 'cifar100'},
+        ],
+      },
+    },
+    {
+      id: 'experiment10',
+      ownerId: 'ownerId1',
+      name: 'Experiment 10',
+      type: ExperimentType.GenericExperiment,
+      created: '2013-03-12 11:48',
+      updated: '2013-03-12 11:48',
+      status: IExperiment.Status.COMPLETED,
+      description: 'Experiment 10 description',
+      isInteractive: false,
+      pipeline: {
+        steps: [
+          {
+            id: '1',
+            operator: 'testOperator1',
+            inputs: {},
+            params: {},
+            coordinates: { x: 120, y: 120 },
+          },
+        ],
+        assets: [],
+      },
+      result: {
+        steps: [
+          {
+            stepId: '1',
+            assets: [
+              { type: IAsset.Type.CV_MODEL, id: 'cvModelId1'},
+              { type: IAsset.Type.CV_MODEL, id: 'cvModelId2'},
+              { type: IAsset.Type.ALBUM, id: 'cifar100'},
+            ],
+            summaries: [
+              {
+                type: IGenericExperiment.SummaryType.SIMPLE,
+                values: {
+                  'str': 'string',
+                  'bool': false,
+                  'number': 12343,
+                },
+              },
+              {
+                type: IGenericExperiment.SummaryType.CONFUSION_MATRIX,
+                labels: [
+                  'row1',
+                  'row2',
+                  'row3',
+                  'row4',
+                  'row5',
+                  'row6',
+                  'row7',
+                ],
+                rows: [
+                  {actual: 0, predicted: 0, count: 147},
+                  {actual: 0, predicted: 1, count: 22},
+                  {actual: 0, predicted: 2, count: 46},
+                  {actual: 0, predicted: 3, count: 42},
+                  {actual: 1, predicted: 0, count: 12},
+                  {actual: 1, predicted: 1, count: 53},
+                  {actual: 1, predicted: 2, count: 12},
+                ],
+              },
+            ],
+            outputValues: {
+              'str': 'string',
+              'bool': false,
+              'number': 12343,
+            },
+            executionTime: Math.round(Math.random() * 1000),
+          },
+        ],
+        assets: [
+          { type: IAsset.Type.CV_MODEL, id: 'cvModelId1'},
+          { type: IAsset.Type.CV_MODEL, id: 'cvModelId2'},
+          { type: IAsset.Type.ALBUM, id: 'cifar100'},
+        ],
+      },
+    },
+    {
+      id: 'experiment11',
+      ownerId: 'ownerId1',
+      name: 'Table-like summaries',
+      description: 'Experiment with a some tables in summary',
+      type: ExperimentType.GenericExperiment,
+      status: IExperiment.Status.COMPLETED,
+      created: '2019-12-04 16:08',
+      updated: '2019-12-04 16:08',
+      isInteractive: false,
+      pipeline: {
+        steps: [
+          {
+            id: '1',
+            operator: 'testOperator1',
+            inputs: {},
+            params: {},
+            coordinates: { x: 80, y: 80 },
+          },
+        ],
+        assets: [],
+      },
+      result: {
+        steps: [
+          {
+            stepId: '1',
+            executionTime: 30,
+            outputValues: [],
+            summaries: [
+              {
+                type: IGenericExperiment.SummaryType.TABLE,
+                name: 'Big table with very important information',
+                columns: [
+                  { name: 'Label' },
+                  ...Array.from(Array(10)).map((_, i) => ({name: 'W' + i})),
+                ],
+                values: Array.from(Array(100)).map((_, ri) => [
+                  'Object_' + ri,
+                  ...Array.from(Array(10)).map(_ => Math.random()),
+                ]),
+              },
+              {
+                type: IGenericExperiment.SummaryType.TABLE,
+                name: 'Multiplication table',
+                columns: [
+                  { name: 'X * Y' },
+                  ...Array.from(Array(50)).map((_, i) => ({name: 'Y=' + (i + 1)})),
+                ],
+                values: Array.from(Array(50)).map((_, ri) => [
+                  'X=' + (ri + 1),
+                  ...Array.from(Array(50)).map((_, i) => (ri + 1) * (i + 1)),
+                ]),
+              },
+              {
+                type: IGenericExperiment.SummaryType.TABLE,
+                name: 'Division table',
+                columns: [
+                  { name: 'X / Y' },
+                  ...Array.from(Array(50)).map((_, i) => ({name: 'Y=' + (i + 1)})),
+                ],
+                values: Array.from(Array(50)).map((_, ri) => [
+                  'X=' + (ri + 1),
+                  ...Array.from(Array(50)).map((_, i) => ((ri + 1) / (i + 1)).toFixed(3)),
+                ]),
+              },
+            ],
+          },
+        ],
+        assets: [],
+      },
+      inLibrary: true,
+    },
+    {
+      id: '1568189266392',
+      name: 'Train Classification Model on xView dataset',
+      description: '',
+      type: ExperimentType.GenericExperiment,
+      ownerId: 'ownerId0',
+      status: IExperiment.Status.COMPLETED,
+      created: '2019-09-11T08:07:46.440Z',
+      updated: '2019-09-11T08:07:46.440Z',
+      isInteractive: false,
+      result: {
+        steps: [{
+          stepId: '1_1',
+          assets: [],
+          summaries: [],
+          outputValues: {},
+          executionTime: 1,
+        }, {
+          stepId: '1_2',
+          assets: [],
+          summaries: [],
+          outputValues: {},
+          executionTime: 0,
+        }, {
+          stepId: '1_3',
+          assets: [],
+          summaries: [],
+          outputValues: {},
+          executionTime: 0,
+        }, {
+          stepId: '1_4',
+          assets: [],
+          summaries: [],
+          outputValues: {},
+          executionTime: 0,
+        }, {
+          stepId: '1_6',
+          assets: [],
+          summaries: [],
+          outputValues: {},
+          executionTime: 0,
+        }, {
+          stepId: '1_7',
+          assets: [],
+          summaries: [],
+          outputValues: {},
+          executionTime: 0,
+        }, {
+          stepId: '1_5_1',
+          assets: [],
+          summaries: [],
+          outputValues: {},
+          executionTime: 0,
+        }, {
+          stepId: '1_5_2',
+          assets: [],
+          summaries: [],
+          outputValues: {},
+          executionTime: 0,
+        }, {
+          stepId: '1_8',
+          assets: [],
+          summaries: [{
+            type: IGenericExperiment.SummaryType.SIMPLE,
+            values: {
+              batch_size: 4,
+              classes: 'Aircraft, Boat, Vehicles, Others',
+              image_sizes: '374x500, 419x500, 375x500, 500x360, 333x500, 500x496',
+              number_of_batches: 3,
+              number_of_items: 284,
+            },
+          }],
+          outputValues: {},
+          executionTime: 3,
+        }, {
+          stepId: '1_9',
+          assets: [],
+          summaries: [{
+            type: IGenericExperiment.SummaryType.SIMPLE,
+            values: {
+              batch_size: 4,
+              classes: 'Aircraft, Boat, Vehicles, Others',
+              image_sizes: '374x500, 419x500, 375x500, 500x360, 333x500, 500x496',
+              number_of_batches: 3,
+              number_of_items: 284,
+            },
+          }],
+          outputValues: {},
+          executionTime: 3,
+        }, {
+          stepId: '1_10',
+          assets: [],
+          summaries: [],
+          outputValues: {},
+          executionTime: 0,
+        }, {
+          stepId: '1_13',
+          assets: [],
+          summaries: [],
+          outputValues: {},
+          executionTime: 0,
+        }, {
+          stepId: '1_14',
+          assets: [],
+          summaries: [],
+          outputValues: {},
+          executionTime: 30,
+        }, {
+          stepId: '1_15',
+          assets: [],
+          summaries: [],
+          outputValues: {},
+          executionTime: 1,
+        }, {
+          stepId: '1_16',
+          assets: [],
+          summaries: [],
+          outputValues: {},
+          executionTime: 1,
+        }, {
+          stepId: '1_18',
+          assets: [{ type: IAsset.Type.CV_MODEL, id: 'm_1568189266408' }],
+          summaries: [],
+          outputValues: {},
+          executionTime: 2,
+        }, {
+          stepId: '2',
+          assets: [],
+          summaries: [],
+          outputValues: {},
+          executionTime: 10,
+        }, {
+          stepId: '3',
+          assets: [],
+          summaries: [],
+          outputValues: {},
+          executionTime: 1,
+        }, {
+          stepId: '4',
+          assets: [{ type: IAsset.Type.ALBUM, id: '1568189266412' }],
+          summaries: [
+            {
+              type: IGenericExperiment.SummaryType.SIMPLE,
+              values: { 'Album ID': 1568189266412 },
+            },
+          ],
+          outputValues: {},
+          executionTime: 1,
+        }, {
+          stepId: '1_17',
+          assets: [],
+          summaries: [
+            {
+              type: IGenericExperiment.SummaryType.CONFUSION_MATRIX,
+              labels: ['Aircraft', 'Boat', 'Vehicles', 'Others'],
+              rows: [{ actual: 0, predicted: 0, count: 24 }, {
+                actual: 0,
+                predicted: 2,
+                count: 2,
+              }, { actual: 1, predicted: 1, count: 22 }, {
+                actual: 2,
+                predicted: 2,
+                count: 25,
+              }, { actual: 3, predicted: 3, count: 26 }],
+            },
+            {
+              type: IGenericExperiment.SummaryType.SIMPLE,
+              values: { 'mAP score': 0.779 },
+            },
+          ],
+          outputValues: {},
+          executionTime: 0,
+        }],
+        assets: [
+          { type: IAsset.Type.ALBUM, id: '1568189266412' },
+          { type: IAsset.Type.CV_MODEL, id: 'm_1568189266408' },
+        ],
+      },
+      pipeline: {
+        assets: [
+          { type: IAsset.Type.ALBUM, id: 'ec19c_train' },
+          { type: IAsset.Type.ALBUM, id: 'ec19c_test' },
+        ],
+        steps: [{
+          id: '1_1',
+          operator: 'select_album',
+          inputs: {},
+          params: { album_id: 'ec19c_train' },
+          coordinates: { x: 20, y: 20 },
+        }, {
+          id: '1_2',
+          operator: 'split_album',
+          inputs: { album: { stepId: '1_1', outputIndex: 0 } },
+          params: {},
+          coordinates: { x: 260, y: 260 },
+        }, {
+          id: '1_3',
+          operator: 'fix_channels',
+          inputs: {},
+          params: {},
+          coordinates: { x: 20, y: 440 },
+        }, {
+          id: '1_4',
+          operator: 'convert_to_float32',
+          inputs: { transformation: { stepId: '1_3', outputIndex: 0 } },
+          params: {},
+          coordinates: { x: 140, y: 440 },
+        }, {
+          id: '1_6',
+          operator: 'resize_and_pad',
+          inputs: { transformation: { stepId: '1_4', outputIndex: 0 } },
+          params: {},
+          coordinates: { x: 260, y: 440 },
+        }, {
+          id: '1_7',
+          operator: 'normalize_by_max',
+          inputs: { transformation: { stepId: '1_6', outputIndex: 0 } },
+          params: {},
+          coordinates: { x: 380, y: 440 },
+        }, {
+          id: '1_5_1',
+          operator: 'random_horizontal_flip',
+          inputs: {},
+          params: {},
+          coordinates: { x: 200, y: 120 },
+        }, {
+          id: '1_5_2',
+          operator: 'random_vertical_flip',
+          inputs: { transformation: { stepId: '1_5_1', outputIndex: 0 } },
+          params: {},
+          coordinates: { x: 340, y: 120 },
+        }, {
+          id: '1_8',
+          operator: 'create_dataloader',
+          inputs: {
+            transformation: { stepId: '1_7', outputIndex: 0 },
+            data_augmentation_transformation: { stepId: '1_5_2', outputIndex: 0 },
+            album: { stepId: '1_2', outputIndex: 0 },
+          },
+          params: {},
+          coordinates: { x: 520, y: 180 },
+        }, {
+          id: '1_9',
+          operator: 'create_dataloader',
+          inputs: {
+            transformation: { stepId: '1_7', outputIndex: 0 },
+            album: { stepId: '1_2', outputIndex: 1 },
+          },
+          params: {},
+          coordinates: { x: 520, y: 340 },
+        }, {
+          id: '1_10',
+          operator: 'create_fe',
+          inputs: {},
+          params: {},
+          coordinates: { x: 380, y: 20 },
+        }, {
+          id: '1_13',
+          operator: 'create_fcn_classifier',
+          inputs: {
+            feature_extractor: { stepId: '1_10', outputIndex: 0 },
+            data_info: { stepId: '1_8', outputIndex: 1 },
+          },
+          params: {},
+          coordinates: { x: 680, y: 80 },
+        }, {
+          id: '1_14',
+          operator: 'learn_neural_classification_model',
+          inputs: {
+            model: { stepId: '1_13', outputIndex: 0 },
+            train_dataloader: { stepId: '1_8', outputIndex: 0 },
+            validate_dataloader: { stepId: '1_9', outputIndex: 0 },
+          },
+          params: { finetune: false },
+          coordinates: { x: 820, y: 220 },
+        }, {
+          id: '1_15',
+          operator: 'create_prediction_model',
+          inputs: {
+            model: { stepId: '1_14', outputIndex: 0 },
+            transformation: { stepId: '1_7', outputIndex: 0 },
+          },
+          params: {},
+          coordinates: { x: 1040, y: 380 },
+        }, {
+          id: '1_16',
+          operator: 'select_album',
+          inputs: {},
+          params: { album_id: 'ec19c_test' },
+          coordinates: { x: 1120, y: 40 },
+        }, {
+          id: '1_17',
+          operator: 'calculate_praf_matrix',
+          inputs: {
+            album: { stepId: '1_16', outputIndex: 0 },
+            predictions: { stepId: '2', outputIndex: 0 },
+          },
+          params: {},
+          coordinates: { x: 1380, y: 100 },
+        }, {
+          id: '1_18',
+          operator: 'save_model',
+          inputs: { model: { stepId: '1_15', outputIndex: 0 } },
+          params: { name: 'classification model xview 1' },
+          coordinates: { x: 1300, y: 520 },
+        }, {
+          id: '2',
+          operator: 'predict_1step',
+          inputs: {
+            model: { stepId: '1_15', outputIndex: 0 },
+            album: { stepId: '1_16', outputIndex: 0 },
+          },
+          params: {},
+          coordinates: { x: 1180, y: 240 },
+        }, {
+          id: '3',
+          operator: 'add_prediction_to_album',
+          inputs: {
+            album: { stepId: '1_16', outputIndex: 0 },
+            prediction: { stepId: '2', outputIndex: 0 },
+          },
+          params: {},
+          coordinates: { x: 1380, y: 320 },
+        }, {
+          id: '4',
+          operator: 'save_album',
+          inputs: { album: { stepId: '3', outputIndex: 0 } },
+          params: { name: 'classification predictions for xview 1' },
+          coordinates: { x: 1420, y: 520 },
+        }],
+      },
+    },
+    {
+      id: '1568193021707',
+      name: 'Train Detection Model on xView dataset',
+      description: '',
+      type: ExperimentType.GenericExperiment,
+      ownerId: 'ownerId0',
+      status: IExperiment.Status.COMPLETED,
+      created: '2019-09-11T09:10:21.802Z',
+      updated: '2019-09-11T09:10:21.802Z',
+      isInteractive: false,
+      result: {
+        steps: [{
+          stepId: '4_1',
+          assets: [],
+          summaries: [],
+          outputValues: {},
+          executionTime: 1,
+        }, {
+          stepId: '4_2',
+          assets: [],
+          summaries: [],
+          outputValues: {},
+          executionTime: 0,
+        }, {
+          stepId: '4_3',
+          assets: [],
+          summaries: [],
+          outputValues: {},
+          executionTime: 0,
+        }, {
+          stepId: '4_4',
+          assets: [],
+          summaries: [],
+          outputValues: {},
+          executionTime: 0,
+        }, {
+          stepId: '4_5',
+          assets: [],
+          summaries: [],
+          outputValues: {},
+          executionTime: 0,
+        }, {
+          stepId: '4_6',
+          assets: [],
+          summaries: [],
+          outputValues: {},
+          executionTime: 0,
+        }, {
+          stepId: '4_7',
+          assets: [],
+          summaries: [],
+          outputValues: {},
+          executionTime: 0,
+        }, {
+          stepId: '4_8',
+          assets: [],
+          summaries: [{
+            type: IGenericExperiment.SummaryType.SIMPLE,
+            values: {
+              batch_size: 4,
+              classes: 'object',
+              image_sizes: '374x500, 419x500, 375x500, 500x360, 333x500, 500x496',
+              number_of_batches: 3,
+              number_of_items: 5884,
+            },
+          }],
+          outputValues: {},
+          executionTime: 3,
+        }, {
+          stepId: '4_9',
+          assets: [],
+          summaries: [{
+            type: IGenericExperiment.SummaryType.SIMPLE,
+            values: {
+              batch_size: 4,
+              classes: 'object',
+              image_sizes: '374x500, 419x500, 375x500, 500x360, 333x500, 500x496',
+              number_of_batches: 3,
+              number_of_items: 5884,
+            },
+          }],
+          outputValues: {},
+          executionTime: 3,
+        }, {
+          stepId: '4_10',
+          assets: [],
+          summaries: [],
+          outputValues: {},
+          executionTime: 0,
+        }, {
+          stepId: '4_13',
+          assets: [],
+          summaries: [],
+          outputValues: {},
+          executionTime: 1,
+        }, {
+          stepId: '4_14',
+          assets: [],
+          summaries: [],
+          outputValues: {},
+          executionTime: 30,
+        }, {
+          stepId: '4_15',
+          assets: [],
+          summaries: [],
+          outputValues: {},
+          executionTime: 1,
+        }, {
+          stepId: '4_16',
+          assets: [],
+          summaries: [],
+          outputValues: {},
+          executionTime: 1,
+        }, {
+          stepId: '4_18',
+          assets: [{ type: IAsset.Type.CV_MODEL, id: 'm_1568189481155' }],
+          summaries: [],
+          outputValues: {},
+          executionTime: 2,
+        }, {
+          stepId: '5',
+          assets: [],
+          summaries: [],
+          outputValues: {},
+          executionTime: 5,
+        }, {
+          stepId: '6',
+          assets: [],
+          summaries: [],
+          outputValues: {},
+          executionTime: 2,
+        }, {
+          stepId: '7',
+          assets: [{ type: IAsset.Type.ALBUM, id: '1568193021734' }],
+          summaries: [
+            {
+              type: IGenericExperiment.SummaryType.SIMPLE,
+              values: { 'Album ID': '1568193021734' },
+            },
+          ],
+          outputValues: {},
+          executionTime: 1,
+        }, {
+          stepId: '4_17',
+          assets: [],
+          summaries: [
+            {
+              type: IGenericExperiment.SummaryType.CONFUSION_MATRIX,
+              labels: ['Vehicles', 'Boat', 'Aircraft'],
+              rows: [
+                {actual: 2, predicted: 2, count: 81 },
+                {actual: 1, predicted: 2, count: 0 },
+                {actual: 0, predicted: 2, count: 0 },
+                {actual: null, predicted: 2, count: 2 },
+                {actual: 2, predicted: 1, count: 0 },
+                {actual: 1, predicted: 1, count: 45 },
+                {actual: 0, predicted: 1, count: 0 },
+                {actual: null, predicted: 1, count: 0 },
+                {actual: 2, predicted: 0, count: 24 },
+                {actual: 1, predicted: 0, count: 43 },
+                {actual: 0, predicted: 0, count: 3130 },
+                {actual: null, predicted: 0, count: 3628 },
+                {actual: 2, predicted: null, count: 131 },
+                {actual: 1, predicted: null, count: 62 },
+                {actual: 0, predicted: null, count: 1581 },
+                {actual: null, predicted: null, count: 0 },
+              ],
+            },
+            {
+              type: IGenericExperiment.SummaryType.SIMPLE,
+              values: { 'mAP score': 0.452 },
+            },
+          ],
+          outputValues: {},
+          executionTime: 0,
+        }],
+        assets: [
+          { type: IAsset.Type.CV_MODEL, id: 'm_1568189481155' },
+          { type: IAsset.Type.ALBUM, id: '1568193021734' },
+        ],
+      },
+      pipeline: {
+        assets: [
+          { type: IAsset.Type.ALBUM, id: 'ec19l_test' },
+          { type: IAsset.Type.ALBUM, id: 'ec19l_train' },
+        ],
+        steps: [{
+          id: '4_1',
+          operator: 'select_album',
+          inputs: {},
+          params: { album_id: 'ec19l_train' },
+          coordinates: { x: 20, y: 20 },
+        }, {
+          id: '4_2',
+          operator: 'split_album',
+          inputs: { album: { stepId: '4_1', outputIndex: 0 } },
+          params: {},
+          coordinates: { x: 220, y: 200 },
+        }, {
+          id: '4_3',
+          operator: 'fix_channels',
+          inputs: {},
+          params: {},
+          coordinates: { x: 40, y: 300 },
+        }, {
+          id: '4_4',
+          operator: 'convert_to_float32',
+          inputs: { transformation: { stepId: '4_3', outputIndex: 0 } },
+          params: {},
+          coordinates: { x: 60, y: 400 },
+        }, {
+          id: '4_5',
+          operator: 'box_relative_coordinates',
+          inputs: { transformation: { stepId: '4_4', outputIndex: 0 } },
+          params: {},
+          coordinates: { x: 180, y: 400 },
+        }, {
+          id: '4_6',
+          operator: 'resize_and_pad',
+          inputs: { transformation: { stepId: '4_5', outputIndex: 0 } },
+          params: {},
+          coordinates: { x: 300, y: 400 },
+        }, {
+          id: '4_7',
+          operator: 'normalize_by_max',
+          inputs: { transformation: { stepId: '4_6', outputIndex: 0 } },
+          params: {},
+          coordinates: { x: 420, y: 400 },
+        }, {
+          id: '4_8',
+          operator: 'create_dataloader',
+          inputs: {
+            transformation: { stepId: '4_7', outputIndex: 0 },
+            album: { stepId: '4_2', outputIndex: 0 },
+          },
+          params: {},
+          coordinates: { x: 560, y: 140 },
+        }, {
+          id: '4_9',
+          operator: 'create_dataloader',
+          inputs: {
+            transformation: { stepId: '4_7', outputIndex: 0 },
+            album: { stepId: '4_2', outputIndex: 1 },
+          },
+          params: {},
+          coordinates: { x: 560, y: 280 },
+        }, {
+          id: '4_10',
+          operator: 'create_vgg16_rfb_fe',
+          inputs: {},
+          params: {},
+          coordinates: { x: 380, y: 60 },
+        }, {
+          id: '4_13',
+          operator: 'create_ssd_detector',
+          inputs: {
+            feature_extractor: { stepId: '4_10', outputIndex: 0 },
+            data_info: { stepId: '4_8', outputIndex: 1 },
+          },
+          params: {},
+          coordinates: { x: 720, y: 20 },
+        }, {
+          id: '4_14',
+          operator: 'learn_detection_model',
+          inputs: {
+            model: { stepId: '4_13', outputIndex: 0 },
+            train_dataloader: { stepId: '4_8', outputIndex: 0 },
+            validate_dataloader: { stepId: '4_9', outputIndex: 0 },
+          },
+          params: { finetune: false },
+          coordinates: { x: 860, y: 220 },
+        }, {
+          id: '4_15',
+          operator: 'create_prediction_model',
+          inputs: {
+            model: { stepId: '4_14', outputIndex: 0 },
+            transformation: { stepId: '4_7', outputIndex: 0 },
+          },
+          params: {},
+          coordinates: { x: 1040, y: 340 },
+        }, {
+          id: '4_16',
+          operator: 'select_album',
+          inputs: {},
+          params: { album_id: 'ec19l_test' },
+          coordinates: { x: 1140, y: 20 },
+        }, {
+          id: '4_17',
+          operator: 'calculate_dc_map_score',
+          inputs: {
+            album: { stepId: '4_16', outputIndex: 0 },
+            predictions: { stepId: '5', outputIndex: 0 },
+          },
+          params: {},
+          coordinates: { x: 1360, y: 100 },
+        }, {
+          id: '4_18',
+          operator: 'save_model',
+          inputs: { model: { stepId: '4_15', outputIndex: 0 } },
+          params: { name: 'detection model xview 1' },
+          coordinates: { x: 1240, y: 460 },
+        }, {
+          id: '5',
+          operator: 'predict_1step',
+          inputs: {
+            model: { stepId: '4_15', outputIndex: 0 },
+            album: { stepId: '4_16', outputIndex: 0 },
+          },
+          params: {},
+          coordinates: { x: 1180, y: 240 },
+        }, {
+          id: '6',
+          operator: 'add_prediction_to_album',
+          inputs: {
+            prediction: { stepId: '5', outputIndex: 0 },
+            album: { stepId: '4_16', outputIndex: 0 },
+          },
+          params: {},
+          coordinates: { x: 1360, y: 300 },
+        }, {
+          id: '7',
+          operator: 'save_album',
+          inputs: { album: { stepId: '6', outputIndex: 0 } },
+          params: { name: 'detection predictions xview 1', description: null },
+          coordinates: { x: 1380, y: 460 },
+        }],
+      },
+    },
+    {
+      id: 'interactive1',
+      ownerId: 'ownerId1',
+      name: 'Test interactive experiment',
+      description: 'Something useful and meaningful goes here',
+      type: ExperimentType.GenericExperiment,
+      status: IExperiment.Status.RUNNING,
+      created: '2019-12-15T12:10:00Z',
+      updated: '2019-12-15T12:10:00Z',
+      isInteractive: true,
+      pipeline: {
+        steps: [
+          {
+            id: '1',
+            operator: 'select_album',
+            inputs: {},
+            params: { album_id: null },
+            coordinates: { x: 20, y: 20 },
+          },
+          {
+            id: '2',
+            operator: 'filter_album',
+            inputs: { album: { stepId: '1', outputIndex: 0 } },
+            params: { condition: 'is square' },
+            coordinates: { x: 160, y: 20 },
+          },
+          {
+            id: '3',
+            operator: 'slice_album',
+            inputs: { album: { stepId: '2', outputIndex: 0 } },
+            params: { min: 100, max: 500 },
+            coordinates: { x: 300, y: 20 },
+          },
+          {
+            id: '4',
+            operator: 'test_album_operator',
+            inputs: { album: { stepId: '3', outputIndex: 0 } },
+            params: { p1: 42, customized: 67 },
+            coordinates: { x: 440, y: 20 },
+          },
+          {
+            id: '7',
+            operator: 'save_album',
+            inputs: { album: { stepId: '4', outputIndex: 0 } },
+            params: { name: 'sample album', description: null },
+            coordinates: { x: 560, y: 20 },
+          },
+        ],
+        assets: [],
+      },
+    },
+  ],
+  options: {
+    indices: ['id', 'ownerId'],
+  },
+};
