@@ -13,7 +13,7 @@
 
 
 
-### Table / Creation (as Import)
+### Table / Creation (as Import)s
 
 - creation table from dataset
     1. frontend: user drop/select file(s) with datasets
